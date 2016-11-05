@@ -3,11 +3,8 @@ package go;
 import engine.GameObject;
 import engine.TexturedSprite;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Color;
 import windows.Game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.glPopMatrix;
@@ -54,7 +51,7 @@ public class Player extends GameObject {
 
         //List<GameObject> objects = Game.rectangleCollide(newX, newY, newX + SIZE, newY + SIZE);
 
-        boolean move = true;
+        /*boolean move = true;
 
         List<GameObject> objects = Game.rectangleCollide(newX, newY, newX + SIZE, newY + SIZE);
 
@@ -67,26 +64,70 @@ public class Player extends GameObject {
 
         if (!move) {
             return;
-        }
+        }*/
 
         x = newX;
         y = newY;
     }
 
     public void getInput(){
+        float dx=0, dy = 0;
+
+        boolean nocollissions = true;
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            move(0, 1);
+            List<GameObject> objects = Game.rectangleCollide(x, y+1, x + SIZE, y+1 + SIZE);
+            for (GameObject go : objects){
+                if (go.getSolid()){
+                    nocollissions = false;
+                    break;
+                }
+            }
+            if(nocollissions){
+                dy++;
+            }
         }
+        nocollissions = true;
         if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            move(0, -1);
+            List<GameObject> objects = Game.rectangleCollide(x, y-1, x + SIZE, y-1 + SIZE);
+            for (GameObject go : objects){
+                if (go.getSolid()){
+                    nocollissions = false;
+                    break;
+                }
+            }
+            if(nocollissions){
+                dy--;
+            }
         }
+        nocollissions = true;
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            move(-1, 0);
+            List<GameObject> objects = Game.rectangleCollide(x-1, y, x-1 + SIZE, y + SIZE);
+            for (GameObject go : objects){
+                if (go.getSolid()){
+                    nocollissions = false;
+                    break;
+                }
+            }
+            if(nocollissions){
+                dx--;
+            }
         }
+        nocollissions = true;
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            move(1, 0);
+            List<GameObject> objects = Game.rectangleCollide(x+1, y, x+1 + SIZE, y + SIZE);
+            for (GameObject go : objects){
+                if (go.getSolid()){
+                    nocollissions = false;
+                    break;
+                }
+            }
+            if(nocollissions){
+                dx++;
+            }
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_W) && Keyboard.isKeyDown(Keyboard.KEY_A)){
+
+        move(dx, dy);
+        /*if(Keyboard.isKeyDown(Keyboard.KEY_W) && Keyboard.isKeyDown(Keyboard.KEY_A)){
             move(-1, 1);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_W) && Keyboard.isKeyDown(Keyboard.KEY_D)){
@@ -97,7 +138,7 @@ public class Player extends GameObject {
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_S) && Keyboard.isKeyDown(Keyboard.KEY_D)){
             move(1, -1);
-        }
+        }*/
     }
 
     private void move(float magX, float magY){
@@ -119,8 +160,8 @@ public class Player extends GameObject {
         //x += 4f*magX * Time.getDelta(); //magnitude
         //y += 4f*magY * Time.getDelta();
 
-        moveAmountX = 4f*magX /** Time.getDelta()*/;
-        moveAmountY = 4f*magY /** Time.getDelta()*/;
+        moveAmountX = /*4f**/magX /** Time.getDelta()*/;
+        moveAmountY = /*4f**/magY /** Time.getDelta()*/;
     }
 
 }
