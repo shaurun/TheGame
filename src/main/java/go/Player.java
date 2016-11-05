@@ -2,11 +2,14 @@ package go;
 
 import engine.GameObject;
 import engine.TexturedSprite;
+import engine.enums.Direction;
 import org.lwjgl.input.Keyboard;
 import windows.Game;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static engine.enums.Direction.*;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
@@ -43,125 +46,45 @@ public class Player extends GameObject {
 
     @Override
     public void update(){
-        float newX = x+moveAmountX;
-        float newY = y+moveAmountY;
-
-        moveAmountX = 0;
-        moveAmountY = 0;
-
-        //List<GameObject> objects = Game.rectangleCollide(newX, newY, newX + SIZE, newY + SIZE);
-
-        /*boolean move = true;
-
-        List<GameObject> objects = Game.rectangleCollide(newX, newY, newX + SIZE, newY + SIZE);
-
-        for (GameObject go : objects){
-            if (go.getSolid()){
-                move = false;
-            }
-        }
-
-
-        if (!move) {
-            return;
-        }*/
-
-        x = newX;
-        y = newY;
+        //TODO: somehow update movement here, not in getInput
     }
 
     public void getInput(){
-        float dx=0, dy = 0;
-
-        boolean nocollissions = true;
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            List<GameObject> objects = Game.rectangleCollide(x, y+1, x + SIZE, y+1 + SIZE);
-            for (GameObject go : objects){
-                if (go.getSolid()){
-                    nocollissions = false;
-                    break;
-                }
-            }
-            if(nocollissions){
-                dy++;
-            }
+            move(UP);
         }
-        nocollissions = true;
-        if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            List<GameObject> objects = Game.rectangleCollide(x, y-1, x + SIZE, y-1 + SIZE);
-            for (GameObject go : objects){
-                if (go.getSolid()){
-                    nocollissions = false;
-                    break;
-                }
-            }
-            if(nocollissions){
-                dy--;
-            }
+        if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
+            move(DOWN);
         }
-        nocollissions = true;
+
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            List<GameObject> objects = Game.rectangleCollide(x-1, y, x-1 + SIZE, y + SIZE);
-            for (GameObject go : objects){
-                if (go.getSolid()){
-                    nocollissions = false;
-                    break;
-                }
-            }
-            if(nocollissions){
-                dx--;
-            }
+            move(LEFT);
         }
-        nocollissions = true;
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            List<GameObject> objects = Game.rectangleCollide(x+1, y, x+1 + SIZE, y + SIZE);
-            for (GameObject go : objects){
-                if (go.getSolid()){
-                    nocollissions = false;
-                    break;
-                }
-            }
-            if(nocollissions){
-                dx++;
-            }
+            move(RIGHT);
         }
-
-        move(dx, dy);
-        /*if(Keyboard.isKeyDown(Keyboard.KEY_W) && Keyboard.isKeyDown(Keyboard.KEY_A)){
-            move(-1, 1);
-        }
-        if(Keyboard.isKeyDown(Keyboard.KEY_W) && Keyboard.isKeyDown(Keyboard.KEY_D)){
-            move(1, 1);
-        }
-        if(Keyboard.isKeyDown(Keyboard.KEY_S) && Keyboard.isKeyDown(Keyboard.KEY_A)){
-            move(-1, -1);
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_S) && Keyboard.isKeyDown(Keyboard.KEY_D)){
-            move(1, -1);
-        }*/
     }
 
-    private void move(float magX, float magY){
-       /* if ((int)magX == 0 && (int)magY == 1){
-            facingDirection = Direction.FORWARD;
-        }
-        if ((int)magX == 0 && (int)magY == -1){
-            facingDirection = Direction.BACKWARD;
-        }
-        if ((int)magX == -1 && (int)magY == 0){
-            facingDirection = Direction.LEFT_SIDE;
-        }
-        if ((int)magX == 1 && (int)magY == 0){
-            facingDirection = Direction.RIGHT_SIDE;
-        }*/
+    //TODO: moving with pixel independent speed
+    private void move(Direction direction){
+        float newX = getX();
+        float newY = getY();
 
+        switch (direction){
+            case UP: newY++; break;
+            case DOWN: newY--; break;
+            case RIGHT: newX++; break;
+            case LEFT: newX--; break;
+        }
 
-        //TODO: add speed based scaling
-        //x += 4f*magX * Time.getDelta(); //magnitude
-        //y += 4f*magY * Time.getDelta();
+        List<GameObject> objects = Game.rectangleCollide(newX, newY, newX + SIZE, newY + SIZE);
+        for (GameObject go : objects){
+            if (go.getSolid()){
+                return;
+            }
+        }
 
-        moveAmountX = /*4f**/magX /** Time.getDelta()*/;
-        moveAmountY = /*4f**/magY /** Time.getDelta()*/;
+        setX(newX);
+        setY(newY);
     }
-
 }
