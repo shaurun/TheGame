@@ -18,6 +18,7 @@ public class Main {
         Game game = Game.getInstance();
 
         while(!Display.isCloseRequested()) {
+            getInput();
             //render
             game.render();
             //display update
@@ -41,7 +42,7 @@ public class Main {
             Display.setDisplayMode(new DisplayMode(width, height));
             Display.setTitle(title);
             Display.create();
-           // Keyboard.create();
+            Keyboard.create();
             //Display.setVSyncEnabled(true);
         } catch (LWJGLException e) {
             e.printStackTrace();
@@ -66,5 +67,9 @@ public class Main {
      */
     private static void cleanUp(){
         Display.destroy();
+    }
+
+    private static void getInput(){
+        Game.getInstance().getInput();
     }
 }

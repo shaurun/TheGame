@@ -35,8 +35,8 @@ public class TexturedSprite extends Sprite{
     public void render(){
         Color.white.bind();
         glEnable(GL_BLEND);
-        //glEnable(GL_ALPHA_TEST);
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_ALPHA_TEST);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         texture.bind();
 
@@ -56,6 +56,7 @@ public class TexturedSprite extends Sprite{
         }
         glEnd();
         glDisable(GL_BLEND);
+        glDisable(GL_ALPHA_TEST);
         glDisable(GL_TEXTURE_2D);
     }
 
