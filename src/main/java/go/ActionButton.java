@@ -20,9 +20,9 @@ public class ActionButton extends GameObject {
     Sprite activeSprite;
     boolean isActive;
 
-    public ActionButton(int x, int y){
+    public ActionButton(int x, int y, String actionName){
         super();
-        init(x, y, 128, 32, "button_fight.png", "button_fight_active.png");
+        init(x, y, 128, 32, "button_"+actionName+".png", "button_"+actionName+"_active.png");
     }
 
     protected void init(float x, float y, float sizeX, float sizeY, String inactiveSpriteFile, String activeSpriteFile){

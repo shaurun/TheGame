@@ -17,7 +17,6 @@ import java.util.List;
 public class Game {
     private static Game game;
     private Player player;
-    private ActionButton fight;
 
     private List<GameObject> objects;
     private List<GameObject> remove;
@@ -29,8 +28,10 @@ public class Game {
         player = new Player(Display.getWidth()/2, Display.getHeight()/2);
         objects.add(player);
 
-        fight = new ActionButton(100, 100);
-        objects.add(fight);
+        objects.add(new ActionButton(150, 100, "fight"));
+        objects.add(new ActionButton(150+(128+2), 100, "act"));
+        objects.add(new ActionButton(150+(128+2)*2, 100, "item"));
+        objects.add(new ActionButton(150+(128+2)*3, 100, "mercy"));
 
         objects.add(new Wall(Display.getWidth()/2-50, Display.getHeight()/2-50, 100, 1));
         objects.add(new Wall(Display.getWidth()/2-50, Display.getHeight()/2+50, 100, 1));
@@ -71,7 +72,11 @@ public class Game {
 
     public void getInput(){
         player.getInput();
-        fight.getInput();
+        for(GameObject go : objects){
+            if (go instanceof ActionButton){
+                ((ActionButton) go).getInput();
+            }
+        }
     }
 
     public static List<GameObject> rectangleCollide(float x1, float y1, float x2, float y2) {
