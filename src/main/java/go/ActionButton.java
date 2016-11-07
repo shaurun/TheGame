@@ -20,7 +20,7 @@ public class ActionButton extends GameObject {
     Sprite activeSprite;
     boolean isActive;
 
-    public ActionButton(int x, int y, String actionName){
+    public ActionButton(float x, float y, String actionName){
         super();
         init(x, y, 128, 32, "button_"+actionName+".png", "button_"+actionName+"_active.png");
     }
@@ -36,26 +36,14 @@ public class ActionButton extends GameObject {
 
     @Override
     public void update(){
-        //TODO: somehow update movement here, not in getInput
     }
 
-    public void getInput(){
-        if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
-            if(isActive){
-                deactivate();
-            }else{
-                activate();
-            }
-        }
-    }
-
-    //TODO: moving with pixel independent speed
-    private void activate(){
+    public void activate(){
         sprite = activeSprite;
         isActive = true;
     }
 
-    private void deactivate(){
+    public void deactivate(){
         sprite = inactiveSprite;
         isActive = false;
     }
