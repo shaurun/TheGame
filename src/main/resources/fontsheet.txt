@@ -1,0 +1,38 @@
+﻿Import the relevant data below into Construct2.
+
+################################################################################
+
+Character width: 27
+Character height: 30
+Character set: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя
+
+################################################################################
+Copy the following JSON text and paste into the Array.Load command INSIDE the default quotes.
+
+{""c2array"":true,""size"":[2,22,1],""data"":[[[3],[4],[6],[7],[8],[9],[10],[11],[12],[13],[14],[15],[16],[17],[18],[19],[20],[21],[22],[23],[24],[25]],[[""!'""],["".,;:""],[""j""],[""il""],[""IJst1?""],[""з""],[""cefrzгеёсэ""],[""Sa235Забвть""],[""Lbgopx046789орхя""],[""EFdkquvyГЕЁдклпучъ""],[""BCPTZhnБВРСТЬЭийнц""],[""KЯм""],[""GRXКУФХЧф""],[""ADOVYАДЛОПжы""],[""HNUИЙНЦЪшщю""],[""w""],[""m""],[""QЫ""],[""MМ""],[""Ж""],[""ШЩЮ""],[""W""]]]}
+
+################################################################################
+These are the details for building the character widths manually, with the SpriteFont  'Set character width' action.
+
+3	"!'"
+4	".,;:"
+6	"j"
+7	"il"
+8	"IJst1?"
+9	"з"
+10	"cefrzгеёсэ"
+11	"Sa235Забвть"
+12	"Lbgopx046789орхя"
+13	"EFdkquvyГЕЁдклпучъ"
+14	"BCPTZhnБВРСТЬЭийнц"
+15	"KЯм"
+16	"GRXКУФХЧф"
+17	"ADOVYАДЛОПжы"
+18	"HNUИЙНЦЪшщю"
+19	"w"
+20	"m"
+21	"QЫ"
+22	"MМ"
+23	"Ж"
+24	"ШЩЮ"
+25	"W"

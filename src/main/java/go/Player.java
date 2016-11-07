@@ -30,19 +30,9 @@ public class Player extends GameObject {
     protected void init(float x, float y, float sizeX, float sizeY, String spriteFile){
         this.setX(x);
         this.setY(y);
-        //this.sprite = new Sprite(r, g, b, sizeX, sizeY);
         sprite = new TexturedSprite(sizeX, sizeY, spriteFile);
     }
 
-    @Override
-    public void render(){
-        glPushMatrix();
-        {
-            glTranslatef(x, y, 0);
-            sprite.render();
-        }
-        glPopMatrix();
-    }
 
     @Override
     public void update(){
@@ -50,17 +40,17 @@ public class Player extends GameObject {
     }
 
     public void getInput(){
-        if(Keyboard.isKeyDown(Keyboard.KEY_W)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_W) && !Keyboard.isKeyDown(Keyboard.KEY_S)){
             move(UP);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_S) && !Keyboard.isKeyDown(Keyboard.KEY_W)) {
             move(DOWN);
         }
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_A)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_A) && !Keyboard.isKeyDown(Keyboard.KEY_D)){
             move(LEFT);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_D)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_D) && !Keyboard.isKeyDown(Keyboard.KEY_A)){
             move(RIGHT);
         }
     }
@@ -69,17 +59,20 @@ public class Player extends GameObject {
     private void move(Direction direction){
         float newX = getX();
         float newY = getY();
+        float acceleration = 1f;
+        float step = 4f;
 
         switch (direction){
-            case UP: newY++; break;
-            case DOWN: newY--; break;
-            case RIGHT: newX++; break;
-            case LEFT: newX--; break;
+            case UP: newY+=step*acceleration; break;
+            case DOWN: newY-=step*acceleration; break;
+            case RIGHT: newX+=step*acceleration; break;
+            case LEFT: newX-=step*acceleration; break;
         }
 
         List<GameObject> objects = Game.rectangleCollide(newX, newY, newX + SIZE, newY + SIZE);
         for (GameObject go : objects){
             if (go.getSolid()){
+                onCollideWith(go, direction);
                 return;
             }
         }

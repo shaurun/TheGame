@@ -20,7 +20,7 @@ public class TexturedSprite extends Sprite{
     public TexturedSprite(float sizeX, float sizeY, String resourceFile) {
         super(0, 0, 0, sizeX, sizeY);
         try {
-            texture = TextureLoader.getTexture("jpg", ResourceLoader.getResourceAsStream(resourceFile));
+            texture = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream(resourceFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Display.destroy();
@@ -33,17 +33,16 @@ public class TexturedSprite extends Sprite{
     }
 
     public void render(){
-        Color.white.bind();
-        glEnable(GL_BLEND);
-        glEnable(GL_ALPHA_TEST);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //Color.white.bind();
+        //glEnable(GL_BLEND);
+        //glEnable(GL_ALPHA_TEST);
+        //glClear(GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         texture.bind();
-
         glBegin(GL_QUADS);
         {
             glTexCoord2f(0, 0); // top left
-            glVertex2f(0, getSizeX());
+            glVertex2f(0, getSizeY());
 
             glTexCoord2f(0, 1); // bottom left
             glVertex2f(0, 0);
@@ -55,8 +54,8 @@ public class TexturedSprite extends Sprite{
             glVertex2f(getSizeX(), getSizeY());
         }
         glEnd();
-        glDisable(GL_BLEND);
-        glDisable(GL_ALPHA_TEST);
+        //glDisable(GL_BLEND);
+        //glDisable(GL_ALPHA_TEST);
         glDisable(GL_TEXTURE_2D);
     }
 

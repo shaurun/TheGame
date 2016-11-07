@@ -1,11 +1,13 @@
 package engine;
 
+import engine.enums.Direction;
+
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
     //object position
-    protected float x;
-    protected float y;
+    protected float x; //0 is left side of the screen
+    protected float y; //0 is bottom side of the screen
     //I can add redo it later, now I'll use Sprite instead
     //private Animation animation;
     protected Sprite sprite;
@@ -75,5 +77,14 @@ public abstract class GameObject {
 
     public void remove(){
         flags[0] = true;
+    }
+
+    protected void onCollideWith(GameObject go, Direction from){
+        switch (from){
+            case UP: setY(go.getY()-getSizeY()-1); break;
+            case DOWN: setY(go.getY()+go.getSizeY()+1); break;
+            case RIGHT: setX(go.getX()-getSizeX()-1); break;
+            case LEFT: setX(go.getX()+go.getSizeX()+1); break;
+        }
     }
 }

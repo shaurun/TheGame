@@ -19,14 +19,11 @@ public class Main {
 
         while(!Display.isCloseRequested()) {
             getInput();
-            //render
-            game.render();
-            //display update
-            Display.update();
-            Display.sync(60); //synchronize display with 60 frames per second
-            //game update
+            //update
             game.update();
-
+            //render
+            render();
+            //display update
         }
         cleanUp();
     }
@@ -43,10 +40,20 @@ public class Main {
             Display.setTitle(title);
             Display.create();
             Keyboard.create();
-            //Display.setVSyncEnabled(true);
+            Display.setVSyncEnabled(true);
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void  render(){
+        glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+
+        Game.getInstance().render();
+
+        Display.update();
+        Display.sync(60);
     }
 
     /**
@@ -57,8 +64,8 @@ public class Main {
         glLoadIdentity();
         glOrtho(0, Display.getWidth(), 0, Display.getHeight(), -1, 1);
         glMatrixMode(GL_MODELVIEW);
-        //glDisable(GL_DEPTH_TEST);
-        //glClearColor(0, 0, 0, 0);
+        glDisable(GL_DEPTH_TEST);
+        glClearColor(0, 0, 0, 0);
     }
 
     /**
@@ -67,6 +74,7 @@ public class Main {
      */
     private static void cleanUp(){
         Display.destroy();
+        Keyboard.destroy();
     }
 
     private static void getInput(){
