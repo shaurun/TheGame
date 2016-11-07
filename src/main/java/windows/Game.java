@@ -2,10 +2,7 @@ package windows;
 
 import engine.GameObject;
 import engine.phisics.Phisics;
-import go.ActionButton;
-import go.ButtonStrip;
-import go.Player;
-import go.Wall;
+import go.*;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -32,6 +29,8 @@ public class Game {
 
         buttonStrip = new ButtonStrip(150, 100);
         objects.add(buttonStrip);
+
+        objects.add(new Monster(Display.getWidth()/2-50, 400));
 
         objects.add(new Wall(Display.getWidth()/2-50, Display.getHeight()/2-50, 100, 1));
         objects.add(new Wall(Display.getWidth()/2-50, Display.getHeight()/2+50, 100, 1));
